@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>603893 中国中铁 股票分析报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+    <header class="gradient-bg text-white py-6 px-4 shadow-lg">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold">603893 中国中铁</h1>
+                    <p class="text-purple-100 mt-1">差异化联邦沉思引擎分析报告</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-2xl font-bold" id="currentPrice">8.42</p>
+                    <p class="text-green-300" id="priceChange">▲ 2.18%</p>
+                </div>
+            </div>
+            <p class="text-purple-100 text-sm mt-4">报告生成时间: 2026-05-23</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 快速概览 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">一、快速概览</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">市值</div>
+                    <div class="text-3xl font-bold text-gray-800">2102 亿</div>
+                    <div class="text-green-600 text-sm mt-2">▲ 1.8% 本周</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">市盈率(PE)</div>
+                    <div class="text-3xl font-bold text-gray-800">8.5</div>
+                    <div class="text-blue-600 text-sm mt-2">建筑装饰行业均值: 12.3</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">市净率(PB)</div>
+                    <div class="text-3xl font-bold text-gray-800">0.68</div>
+                    <div class="text-orange-600 text-sm mt-2">低于历史 85% 时间</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">股息率</div>
+                    <div class="text-3xl font-bold text-gray-800">3.2%</div>
+                    <div class="text-purple-600 text-sm mt-2">近五年平均: 2.8%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 股价走势 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">二、股价走势</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <canvas id="priceChart" height="300"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="volumeChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 财务拓扑分析 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">三、财务拓扑分析 (智能体 F)</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <canvas id="financialTopologyChart" height="250"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="metric-card rounded-lg p-4">
+                            <div class="text-gray-600 text-sm">扩张性 λ1</div>
+                            <div class="text-2xl font-bold text-blue-600">0.78</div>
+                            <div class="text-gray-500 text-xs mt-1">稳定扩张</div>
+                        </div>
+                        <div class="metric-card rounded-lg p-4">
+                            <div class="text-gray-600 text-sm">稳健性 λ2</div>
+                            <div class="text-2xl font-bold text-green-600">0.82</div>
+                            <div class="text-gray-500 text-xs mt-1">财务稳健</div>
+                        </div>
+                        <div class="metric-card rounded-lg p-4">
+                            <div class="text-gray-600 text-sm">熵排效率 λ3</div>
+                            <div class="text-2xl font-bold text-orange-600">0.65</div>
+                            <div class="text-gray-500 text-xs mt-1">正常水平</div>
+                        </div>
+                        <div class="bg-gray-100 rounded-lg p-4">
+                            <div class="text-gray-600 text-sm">元空间曲率 κ</div>
+                            <div class="text-2xl font-bold text-purple-600">0.22</div>
+                            <div class="text-gray-500 text-xs mt-1">未达相变阈值(0.40)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 意图考古分析 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">四、意图考古分析 (智能体 I)</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <canvas id="intentVectorChart" height="250"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">意图矢量</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-700">产品革新强度</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                                            <div class="h-2 bg-blue-500 rounded-full" style="width: 72%"></div>
+                                        </div>
+                                        <span class="font-bold text-blue-600">0.72</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-700">运营效率导向</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                                            <div class="h-2 bg-green-500 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="font-bold text-green-600">0.85</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-700">产能扩张系数</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                                            <div class="h-2 bg-orange-500 rounded-full" style="width: 68%"></div>
+                                        </div>
+                                        <span class="font-bold text-orange-600">0.68</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-700">市场投入强度</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                                            <div class="h-2 bg-purple-500 rounded-full" style="width: 55%"></div>
+                                        </div>
+                                        <span class="font-bold text-purple-600">0.55</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-700">意图自洽指数</span>
+                                    <div class="flex items-center">
+                                        <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                                            <div class="h-2 bg-teal-500 rounded-full" style="width: 91%"></div>
+                                        </div>
+                                        <span class="font-bold text-teal-600">0.91</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 财务数据 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">五、关键财务数据</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="py-3 px-4 text-gray-600 font-semibold">指标</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">2026 Q1</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">2025 Q4</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">2025 Q3</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">趋势</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">营业收入(亿元)</td>
+                                <td class="py-4 px-4 font-semibold">2756</td>
+                                <td class="py-4 px-4">2632</td>
+                                <td class="py-4 px-4">2518</td>
+                                <td class="py-4 px-4 text-green-600">▲ 4.7%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">净利润(亿元)</td>
+                                <td class="py-4 px-4 font-semibold">68.5</td>
+                                <td class="py-4 px-4">62.3</td>
+                                <td class="py-4 px-4">59.8</td>
+                                <td class="py-4 px-4 text-green-600">▲ 9.9%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">经营现金流(亿元)</td>
+                                <td class="py-4 px-4 font-semibold">182</td>
+                                <td class="py-4 px-4">156</td>
+                                <td class="py-4 px-4">142</td>
+                                <td class="py-4 px-4 text-green-600">▲ 16.7%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">ROIC</td>
+                                <td class="py-4 px-4 font-semibold">9.2%</td>
+                                <td class="py-4 px-4">8.8%</td>
+                                <td class="py-4 px-4">8.5%</td>
+                                <td class="py-4 px-4 text-green-600">▲ 0.4pp</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-4">资产负债率</td>
+                                <td class="py-4 px-4 font-semibold">74.8%</td>
+                                <td class="py-4 px-4">75.2%</td>
+                                <td class="py-4 px-4">75.8%</td>
+                                <td class="py-4 px-4 text-green-600">▼ -0.4pp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联邦共振分析 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">六、联邦共振分析</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <canvas id="resonanceChart" height="280"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">联邦共识度</h3>
+                            <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">
+                                0.89
+                            </div>
+                            <p class="text-gray-600">强共识认知</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                <div class="text-sm text-gray-600">意图权重</div>
+                                <div class="text-xl font-bold text-blue-600">0.25</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <div class="text-sm text-gray-600">财务权重</div>
+                                <div class="text-xl font-bold text-green-600">0.25</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                <div class="text-sm text-gray-600">产业维度</div>
+                                <div class="text-xl font-bold text-purple-600">0.35</div>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-4 text-center">
+                                <div class="text-sm text-gray-600">风险衰减</div>
+                                <div class="text-xl font-bold text-orange-600">0.20</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 最终结论 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">七、最终认知相</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">核心结论</h3>
+                        <div class="space-y-3 text-gray-700">
+                            <p><span class="font-semibold">• 战略意图：</span>运营效率提升+稳健扩张，战略意图高度自洽</p>
+                            <p><span class="font-semibold">• 财务拓扑：</span>稳健扩张态，曲率κ=0.22，ROIC-WACC spread健康</p>
+                            <p><span class="font-semibold">• 产业地位：</span>全球基建龙头，技术领先，竞争格局稳定</p>
+                            <p><span class="font-semibold">• 风险熵值：</span>处于安全区，治理结构稳定</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">认知边界</h3>
+                        <div class="space-y-2 text-gray-600 text-sm">
+                            <p>⚠️ 本认知相基于公开信息，管理层真实意图不可观测</p>
+                            <p>⚠️ 市场共振方向不可预测，仅提供当前状态截面</p>
+                            <p>⚠️ 本联邦运行于沙箱环境，不构成投资建议</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-green-200">
+                            <p class="text-gray-600 text-sm">认知相半衰期：45个交易日</p>
+                            <p class="text-gray-500 text-xs mt-1">下一次预期激发：2026年Q2季报</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="gradient-bg text-white py-8 px-4 mt-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-purple-100">差异化联邦沉思引擎 · 证券分析系统</p>
+            <p class="text-purple-200 text-sm mt-2">MECP-v1.0 Protocol</p>
+        </div>
+    </footer>
+
+    <script>
+        // 股价走势图
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: '股价 (元)',
+                    data: [7.2, 7.5, 7.8, 7.6, 8.0, 8.2, 8.1, 7.9, 8.0, 8.2, 8.3, 8.42],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '近一年股价走势',
+                        font: { size: 16 }
+                    },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: false }
+                }
+            }
+        });
+
+        // 成交量图
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: '成交量 (百万股)',
+                    data: [45, 52, 68, 41, 55, 72, 48, 39, 51, 63, 58, 65],
+                    backgroundColor: 'rgba(118, 75, 162, 0.7)',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '近一年成交量',
+                        font: { size: 16 }
+                    },
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // 财务拓扑雷达图
+        const financialTopologyCtx = document.getElementById('financialTopologyChart').getContext('2d');
+        new Chart(financialTopologyCtx, {
+            type: 'radar',
+            data: {
+                labels: ['扩张性', '稳健性', '熵排效率', '资金转化率', 'ROIC-WACC', '经营现金流占比'],
+                datasets: [{
+                    label: '当前',
+                    data: [0.78, 0.82, 0.65, 0.71, 0.88, 0.85],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: '#667eea',
+                    pointBackgroundColor: '#667eea'
+                }, {
+                    label: '行业均值',
+                    data: [0.65, 0.70, 0.60, 0.62, 0.75, 0.72],
+                    backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                    borderColor: '#9ca3af',
+                    pointBackgroundColor: '#9ca3af'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '财务拓扑特征',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    r: { beginAtZero: true, max: 1 }
+                }
+            }
+        });
+
+        // 意图矢量图
+        const intentVectorCtx = document.getElementById('intentVectorChart').getContext('2d');
+        new Chart(intentVectorCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['产品革新', '运营效率', '产能扩张', '市场投入', '意图自洽'],
+                datasets: [{
+                    data: [0.72, 0.85, 0.68, 0.55, 0.91],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(34, 197, 94, 0.7)',
+                        'rgba(249, 115, 22, 0.7)',
+                        'rgba(168, 85, 247, 0.7)',
+                        'rgba(20, 184, 166, 0.7)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '意图矢量分布',
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+
+        // 联邦共振图
+        const resonanceCtx = document.getElementById('resonanceChart').getContext('2d');
+        new Chart(resonanceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['意图域', '财务域', '产业维度', '风险域', '情绪域'],
+                datasets: [{
+                    data: [0.25, 0.25, 0.35, 0.10, 0.05],
+                    backgroundColor: [
+                        '#667eea',
+                        '#10b981',
+                        '#a855f7',
+                        '#f97316',
+                        '#8b5cf6'
+                    ],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '联邦权重分配',
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+
+        // 模拟实时价格更新
+        setInterval(() => {
+            const priceEl = document.getElementById('currentPrice');
+            const changeEl = document.getElementById('priceChange');
+            let currentPrice = parseFloat(priceEl.textContent);
+            let change = (Math.random() - 0.5) * 0.02;
+            currentPrice = (currentPrice + change).toFixed(2);
+            priceEl.textContent = currentPrice;
+            
+            const changePercent = ((Math.random() - 0.45) * 4).toFixed(2);
+            if (changePercent >= 0) {
+                changeEl.textContent = `▲ ${changePercent}%`;
+                changeEl.className = 'text-green-300';
+            } else {
+                changeEl.textContent = `▼ ${Math.abs(changePercent)}%`;
+                changeEl.className = 'text-red-300';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
