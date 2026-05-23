@@ -7,6 +7,7 @@ from feature_engineering import FeatureEngineer
 from ml_strategy import MLStrategy
 from backtest_engine import BacktestEngine
 from visualization import Visualizer
+from report_generator import ReportGenerator
 
 def run_pipeline(symbol: str = 'AAPL',
                  start_date: str = '2020-01-01',
@@ -18,7 +19,8 @@ def run_pipeline(symbol: str = 'AAPL',
                  take_profit: float = 0.10,
                  lookahead: int = 5,
                  threshold: float = 0.55,
-                 save_results: bool = True):
+                 save_results: bool = True,
+                 generate_html_report: bool = True):
 
     print("="*60)
     print("机器学习量化交易策略回测系统")
@@ -115,6 +117,17 @@ def run_pipeline(symbol: str = 'AAPL',
         visualizer.plot_feature_importance(train_results['feature_importance'])
         visualizer.plot_trade_distribution(metrics)
 
+    if generate_html_report:
+        report_gen = ReportGenerator(
+            metrics=metrics,
+            symbol=symbol,
+            model_type=model_type,
+            start_date=start_date,
+            end_date=end_date
+        )
+        report_path = report_gen.save_report(f"{symbol}_report.html")
+        print(f"\nHTML报告已生成: {report_path}")
+
     return metrics, strategy
 
 if __name__ == '__main__':
@@ -132,6 +145,7 @@ if __name__ == '__main__':
     parser.add_argument('--lookahead', type=int, default=5, help='预测周期(天)')
     parser.add_argument('--threshold', type=float, default=0.55, help='置信度阈值')
     parser.add_argument('--no-save', action='store_true', help='不保存结果')
+    parser.add_argument('--no-report', action='store_true', help='不生成HTML报告')
 
     args = parser.parse_args()
 
@@ -146,5 +160,6 @@ if __name__ == '__main__':
         take_profit=args.take_profit,
         lookahead=args.lookahead,
         threshold=args.threshold,
-        save_results=not args.no_save
+        save_results=not args.no_save,
+        generate_html_report=not args.no_report
     )
