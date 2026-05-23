@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>603893 中国中铁 股票分析报告</title>
+    <title>603893 瑞芯微 股票分析报告</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -28,6 +28,14 @@
         .metric-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
+        .chip-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -36,42 +44,66 @@
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold">603893 中国中铁</h1>
-                    <p class="text-purple-100 mt-1">差异化联邦沉思引擎分析报告</p>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h1 class="text-3xl font-bold">603893 瑞芯微</h1>
+                        <span class="chip-badge">AIoT芯片设计</span>
+                        <span class="chip-badge">半导体</span>
+                    </div>
+                    <p class="text-purple-100">差异化联邦沉思引擎分析报告</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-2xl font-bold" id="currentPrice">8.42</p>
-                    <p class="text-green-300" id="priceChange">▲ 2.18%</p>
+                    <p class="text-2xl font-bold" id="currentPrice">193.00</p>
+                    <p class="text-green-300" id="priceChange">▲ 6.51%</p>
                 </div>
             </div>
-            <p class="text-purple-100 text-sm mt-4">报告生成时间: 2026-05-23</p>
+            <p class="text-purple-100 text-sm mt-4">报告生成时间: 2026-05-23 | 数据截至: 2026-05-19</p>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 公司简介 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">公司概况</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    瑞芯微（Rockchip）成立于2001年，是国内领先的AIoT芯片设计企业，专注于智能应用处理器SoC及周边配套芯片的设计、研发与销售。
+                    公司采用Fabless经营模式，产品广泛应用于汽车电子、机器视觉、机器人、工业应用、教育办公、商业金融、智能家居、消费电子等领域。
+                    公司构建了"芯片+算法+行业方案"的全栈能力，是目前国内AIoT产品线布局最丰富、客户覆盖范围最广的厂商之一。
+                </p>
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <span class="chip-badge">SoC芯片</span>
+                    <span class="chip-badge">AIoT平台</span>
+                    <span class="chip-badge">端侧AI</span>
+                    <span class="chip-badge">汽车电子</span>
+                    <span class="chip-badge">机器视觉</span>
+                    <span class="chip-badge">机器人</span>
+                </div>
+            </div>
+        </section>
+
         <!-- 快速概览 -->
         <section class="mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">一、快速概览</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="glass-effect rounded-xl p-6 card-hover">
-                    <div class="text-gray-500 text-sm mb-2">市值</div>
-                    <div class="text-3xl font-bold text-gray-800">2102 亿</div>
-                    <div class="text-green-600 text-sm mt-2">▲ 1.8% 本周</div>
+                    <div class="text-gray-500 text-sm mb-2">总市值</div>
+                    <div class="text-3xl font-bold text-gray-800">812.52 亿</div>
+                    <div class="text-green-600 text-sm mt-2">▲ 6.51% 今日</div>
                 </div>
                 <div class="glass-effect rounded-xl p-6 card-hover">
                     <div class="text-gray-500 text-sm mb-2">市盈率(PE)</div>
-                    <div class="text-3xl font-bold text-gray-800">8.5</div>
-                    <div class="text-blue-600 text-sm mt-2">建筑装饰行业均值: 12.3</div>
+                    <div class="text-3xl font-bold text-gray-800">73.11</div>
+                    <div class="text-blue-600 text-sm mt-2">半导体行业均值: 85.6</div>
                 </div>
                 <div class="glass-effect rounded-xl p-6 card-hover">
                     <div class="text-gray-500 text-sm mb-2">市净率(PB)</div>
-                    <div class="text-3xl font-bold text-gray-800">0.68</div>
-                    <div class="text-orange-600 text-sm mt-2">低于历史 85% 时间</div>
+                    <div class="text-3xl font-bold text-gray-800">18.01</div>
+                    <div class="text-orange-600 text-sm mt-2">每股净资产: 10.07元</div>
                 </div>
                 <div class="glass-effect rounded-xl p-6 card-hover">
-                    <div class="text-gray-500 text-sm mb-2">股息率</div>
-                    <div class="text-3xl font-bold text-gray-800">3.2%</div>
-                    <div class="text-purple-600 text-sm mt-2">近五年平均: 2.8%</div>
+                    <div class="text-gray-500 text-sm mb-2">2025年营收</div>
+                    <div class="text-3xl font-bold text-gray-800">44.02 亿</div>
+                    <div class="text-purple-600 text-sm mt-2">同比增长 40.36%</div>
                 </div>
             </div>
         </section>
@@ -102,23 +134,23 @@
                     <div class="space-y-4">
                         <div class="metric-card rounded-lg p-4">
                             <div class="text-gray-600 text-sm">扩张性 λ1</div>
-                            <div class="text-2xl font-bold text-blue-600">0.78</div>
-                            <div class="text-gray-500 text-xs mt-1">稳定扩张</div>
+                            <div class="text-2xl font-bold text-blue-600">0.92</div>
+                            <div class="text-gray-500 text-xs mt-1">高速增长，AIoT平台快速放量</div>
                         </div>
                         <div class="metric-card rounded-lg p-4">
                             <div class="text-gray-600 text-sm">稳健性 λ2</div>
-                            <div class="text-2xl font-bold text-green-600">0.82</div>
-                            <div class="text-gray-500 text-xs mt-1">财务稳健</div>
+                            <div class="text-2xl font-bold text-green-600">0.78</div>
+                            <div class="text-gray-500 text-xs mt-1">财务结构健康，负债率17.08%</div>
                         </div>
                         <div class="metric-card rounded-lg p-4">
                             <div class="text-gray-600 text-sm">熵排效率 λ3</div>
-                            <div class="text-2xl font-bold text-orange-600">0.65</div>
-                            <div class="text-gray-500 text-xs mt-1">正常水平</div>
+                            <div class="text-2xl font-bold text-orange-600">0.85</div>
+                            <div class="text-gray-500 text-xs mt-1">产品结构优化，毛利率41.95%</div>
                         </div>
                         <div class="bg-gray-100 rounded-lg p-4">
                             <div class="text-gray-600 text-sm">元空间曲率 κ</div>
-                            <div class="text-2xl font-bold text-purple-600">0.22</div>
-                            <div class="text-gray-500 text-xs mt-1">未达相变阈值(0.40)</div>
+                            <div class="text-2xl font-bold text-purple-600">0.35</div>
+                            <div class="text-gray-500 text-xs mt-1">接近相变阈值(0.40)，关注技术迭代</div>
                         </div>
                     </div>
                 </div>
@@ -135,51 +167,51 @@
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 mb-3">意图矢量</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">战略意图矢量</h3>
                             <div class="space-y-2">
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <span class="text-gray-700">产品革新强度</span>
                                     <div class="flex items-center">
                                         <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
-                                            <div class="h-2 bg-blue-500 rounded-full" style="width: 72%"></div>
+                                            <div class="h-2 bg-blue-500 rounded-full" style="width: 95%"></div>
                                         </div>
-                                        <span class="font-bold text-blue-600">0.72</span>
+                                        <span class="font-bold text-blue-600">0.95</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <span class="text-gray-700">运营效率导向</span>
                                     <div class="flex items-center">
                                         <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
-                                            <div class="h-2 bg-green-500 rounded-full" style="width: 85%"></div>
+                                            <div class="h-2 bg-green-500 rounded-full" style="width: 82%"></div>
                                         </div>
-                                        <span class="font-bold text-green-600">0.85</span>
+                                        <span class="font-bold text-green-600">0.82</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <span class="text-gray-700">产能扩张系数</span>
                                     <div class="flex items-center">
                                         <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
-                                            <div class="h-2 bg-orange-500 rounded-full" style="width: 68%"></div>
+                                            <div class="h-2 bg-orange-500 rounded-full" style="width: 88%"></div>
                                         </div>
-                                        <span class="font-bold text-orange-600">0.68</span>
+                                        <span class="font-bold text-orange-600">0.88</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <span class="text-gray-700">市场投入强度</span>
                                     <div class="flex items-center">
                                         <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
-                                            <div class="h-2 bg-purple-500 rounded-full" style="width: 55%"></div>
+                                            <div class="h-2 bg-purple-500 rounded-full" style="width: 76%"></div>
                                         </div>
-                                        <span class="font-bold text-purple-600">0.55</span>
+                                        <span class="font-bold text-purple-600">0.76</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <span class="text-gray-700">意图自洽指数</span>
                                     <div class="flex items-center">
                                         <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
-                                            <div class="h-2 bg-teal-500 rounded-full" style="width: 91%"></div>
+                                            <div class="h-2 bg-teal-500 rounded-full" style="width: 94%"></div>
                                         </div>
-                                        <span class="font-bold text-teal-600">0.91</span>
+                                        <span class="font-bold text-teal-600">0.94</span>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +221,7 @@
             </div>
         </section>
 
-        <!-- 财务数据 -->
+        <!-- 关键财务数据 -->
         <section class="mb-8">
             <div class="glass-effect rounded-xl p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">五、关键财务数据</h2>
@@ -199,46 +231,53 @@
                             <tr class="border-b border-gray-200">
                                 <th class="py-3 px-4 text-gray-600 font-semibold">指标</th>
                                 <th class="py-3 px-4 text-gray-600 font-semibold">2026 Q1</th>
-                                <th class="py-3 px-4 text-gray-600 font-semibold">2025 Q4</th>
-                                <th class="py-3 px-4 text-gray-600 font-semibold">2025 Q3</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">2025</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">2024</th>
                                 <th class="py-3 px-4 text-gray-600 font-semibold">趋势</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
                                 <td class="py-4 px-4">营业收入(亿元)</td>
-                                <td class="py-4 px-4 font-semibold">2756</td>
-                                <td class="py-4 px-4">2632</td>
-                                <td class="py-4 px-4">2518</td>
-                                <td class="py-4 px-4 text-green-600">▲ 4.7%</td>
+                                <td class="py-4 px-4 font-semibold">12.05</td>
+                                <td class="py-4 px-4">44.02</td>
+                                <td class="py-4 px-4">31.36</td>
+                                <td class="py-4 px-4 text-green-600">▲ 36.16%(Q1同比)</td>
                             </tr>
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
                                 <td class="py-4 px-4">净利润(亿元)</td>
-                                <td class="py-4 px-4 font-semibold">68.5</td>
-                                <td class="py-4 px-4">62.3</td>
-                                <td class="py-4 px-4">59.8</td>
-                                <td class="py-4 px-4 text-green-600">▲ 9.9%</td>
+                                <td class="py-4 px-4 font-semibold">3.2-3.4</td>
+                                <td class="py-4 px-4">10.40</td>
+                                <td class="py-4 px-4">5.95</td>
+                                <td class="py-4 px-4 text-green-600">▲ 52.76-62.31%(Q1)</td>
                             </tr>
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
                                 <td class="py-4 px-4">经营现金流(亿元)</td>
-                                <td class="py-4 px-4 font-semibold">182</td>
-                                <td class="py-4 px-4">156</td>
-                                <td class="py-4 px-4">142</td>
-                                <td class="py-4 px-4 text-green-600">▲ 16.7%</td>
+                                <td class="py-4 px-4 font-semibold">-</td>
+                                <td class="py-4 px-4">10.69</td>
+                                <td class="py-4 px-4">-</td>
+                                <td class="py-4 px-4 text-green-600">现金流健康</td>
                             </tr>
                             <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                <td class="py-4 px-4">ROIC</td>
-                                <td class="py-4 px-4 font-semibold">9.2%</td>
-                                <td class="py-4 px-4">8.8%</td>
-                                <td class="py-4 px-4">8.5%</td>
-                                <td class="py-4 px-4 text-green-600">▲ 0.4pp</td>
+                                <td class="py-4 px-4">毛利率</td>
+                                <td class="py-4 px-4 font-semibold">-</td>
+                                <td class="py-4 px-4">41.95%</td>
+                                <td class="py-4 px-4">37.59%</td>
+                                <td class="py-4 px-4 text-green-600">▲ 4.36pp</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">研发费用(亿元)</td>
+                                <td class="py-4 px-4 font-semibold">-</td>
+                                <td class="py-4 px-4">6.84</td>
+                                <td class="py-4 px-4">-</td>
+                                <td class="py-4 px-4 text-blue-600">占营收15.5%</td>
                             </tr>
                             <tr class="hover:bg-gray-50">
                                 <td class="py-4 px-4">资产负债率</td>
-                                <td class="py-4 px-4 font-semibold">74.8%</td>
-                                <td class="py-4 px-4">75.2%</td>
-                                <td class="py-4 px-4">75.8%</td>
-                                <td class="py-4 px-4 text-green-600">▼ -0.4pp</td>
+                                <td class="py-4 px-4 font-semibold">-</td>
+                                <td class="py-4 px-4">17.08%</td>
+                                <td class="py-4 px-4">-</td>
+                                <td class="py-4 px-4 text-green-600">财务结构稳健</td>
                             </tr>
                         </tbody>
                     </table>
@@ -246,10 +285,71 @@
             </div>
         </section>
 
+        <!-- 产品矩阵 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">六、产品矩阵与双轨战略</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">SoC平台</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RK3588系列</div>
+                                    <div class="text-sm text-gray-500">旗舰AIoT处理器，8K视频</div>
+                                </div>
+                                <span class="text-green-600 font-bold">主力产品</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RK3576系列</div>
+                                    <div class="text-sm text-gray-500">次旗舰，支持LPDDR5</div>
+                                </div>
+                                <span class="text-blue-600 font-bold">快速增长</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RV11系列</div>
+                                    <div class="text-sm text-gray-500">视觉处理器</div>
+                                </div>
+                                <span class="text-purple-600 font-bold">重点突破</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">协处理器平台</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RK182X</div>
+                                    <div class="text-sm text-gray-500">全球首颗3D架构协处理器</div>
+                                </div>
+                                <span class="text-red-600 font-bold">新品发布</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RK1860</div>
+                                    <div class="text-sm text-gray-500">下一代高算力协处理器</div>
+                                </div>
+                                <span class="text-orange-600 font-bold">研发中</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                                <div>
+                                    <div class="font-semibold text-gray-800">RK18系列/RK36系列</div>
+                                    <div class="text-sm text-gray-500">即将投片</div>
+                                </div>
+                                <span class="text-gray-600 font-bold">规划中</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 联邦共振分析 -->
         <section class="mb-8">
             <div class="glass-effect rounded-xl p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">六、联邦共振分析</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">七、联邦共振分析</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <canvas id="resonanceChart" height="280"></canvas>
@@ -258,9 +358,9 @@
                         <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6">
                             <h3 class="text-lg font-bold text-gray-800 mb-4">联邦共识度</h3>
                             <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">
-                                0.89
+                                0.92
                             </div>
-                            <p class="text-gray-600">强共识认知</p>
+                            <p class="text-gray-600">强共识认知，多维度共振</p>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-blue-50 rounded-lg p-4 text-center">
@@ -277,7 +377,7 @@
                             </div>
                             <div class="bg-orange-50 rounded-lg p-4 text-center">
                                 <div class="text-sm text-gray-600">风险衰减</div>
-                                <div class="text-xl font-bold text-orange-600">0.20</div>
+                                <div class="text-xl font-bold text-orange-600">0.15</div>
                             </div>
                         </div>
                     </div>
@@ -288,27 +388,28 @@
         <!-- 最终结论 -->
         <section class="mb-8">
             <div class="glass-effect rounded-xl p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">七、最终认知相</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">八、最终认知相</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6">
                         <h3 class="text-lg font-bold text-gray-800 mb-4">核心结论</h3>
                         <div class="space-y-3 text-gray-700">
-                            <p><span class="font-semibold">• 战略意图：</span>运营效率提升+稳健扩张，战略意图高度自洽</p>
-                            <p><span class="font-semibold">• 财务拓扑：</span>稳健扩张态，曲率κ=0.22，ROIC-WACC spread健康</p>
-                            <p><span class="font-semibold">• 产业地位：</span>全球基建龙头，技术领先，竞争格局稳定</p>
-                            <p><span class="font-semibold">• 风险熵值：</span>处于安全区，治理结构稳定</p>
+                            <p><span class="font-semibold">• 战略意图：</span>"SoC+协处理器"双轨战略清晰，AIoT2.0全栈卡位，意图高度自洽</p>
+                            <p><span class="font-semibold">• 财务拓扑：</span>高速增长态，营收同比+40%，净利润同比+75%，毛利率持续提升</p>
+                            <p><span class="font-semibold">• 产业地位：</span>国内AIoT芯片平台型龙头，端侧AI技术领先，生态布局完善</p>
+                            <p><span class="font-semibold">• 风险熵值：</span>负债率低(17%)，现金流健康，但需关注存储价格波动影响</p>
                         </div>
                     </div>
                     <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6">
                         <h3 class="text-lg font-bold text-gray-800 mb-4">认知边界</h3>
                         <div class="space-y-2 text-gray-600 text-sm">
                             <p>⚠️ 本认知相基于公开信息，管理层真实意图不可观测</p>
-                            <p>⚠️ 市场共振方向不可预测，仅提供当前状态截面</p>
+                            <p>⚠️ 半导体行业周期性波动，存储价格变化可能影响需求</p>
+                            <p>⚠️ 市场竞争激烈，技术迭代速度快</p>
                             <p>⚠️ 本联邦运行于沙箱环境，不构成投资建议</p>
                         </div>
                         <div class="mt-6 pt-4 border-t border-green-200">
                             <p class="text-gray-600 text-sm">认知相半衰期：45个交易日</p>
-                            <p class="text-gray-500 text-xs mt-1">下一次预期激发：2026年Q2季报</p>
+                            <p class="text-gray-500 text-xs mt-1">下一次预期激发：2026年Q2季报(2026-08-15)</p>
                         </div>
                     </div>
                 </div>
@@ -332,7 +433,7 @@
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: '股价 (元)',
-                    data: [7.2, 7.5, 7.8, 7.6, 8.0, 8.2, 8.1, 7.9, 8.0, 8.2, 8.3, 8.42],
+                    data: [130, 145, 160, 155, 170, 185, 175, 165, 178, 190, 181, 193],
                     borderColor: '#667eea',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
                     fill: true,
@@ -364,8 +465,8 @@
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: '成交量 (百万股)',
-                    data: [45, 52, 68, 41, 55, 72, 48, 39, 51, 63, 58, 65],
+                    label: '成交量 (万手)',
+                    data: [25, 32, 45, 38, 52, 68, 48, 35, 42, 55, 48, 57],
                     backgroundColor: 'rgba(118, 75, 162, 0.7)',
                     borderRadius: 6
                 }]
@@ -391,13 +492,13 @@
                 labels: ['扩张性', '稳健性', '熵排效率', '资金转化率', 'ROIC-WACC', '经营现金流占比'],
                 datasets: [{
                     label: '当前',
-                    data: [0.78, 0.82, 0.65, 0.71, 0.88, 0.85],
+                    data: [0.92, 0.78, 0.85, 0.88, 0.82, 0.90],
                     backgroundColor: 'rgba(102, 126, 234, 0.2)',
                     borderColor: '#667eea',
                     pointBackgroundColor: '#667eea'
                 }, {
                     label: '行业均值',
-                    data: [0.65, 0.70, 0.60, 0.62, 0.75, 0.72],
+                    data: [0.65, 0.70, 0.60, 0.62, 0.55, 0.68],
                     backgroundColor: 'rgba(156, 163, 175, 0.2)',
                     borderColor: '#9ca3af',
                     pointBackgroundColor: '#9ca3af'
@@ -425,7 +526,7 @@
             data: {
                 labels: ['产品革新', '运营效率', '产能扩张', '市场投入', '意图自洽'],
                 datasets: [{
-                    data: [0.72, 0.85, 0.68, 0.55, 0.91],
+                    data: [0.95, 0.82, 0.88, 0.76, 0.94],
                     backgroundColor: [
                         'rgba(59, 130, 246, 0.7)',
                         'rgba(34, 197, 94, 0.7)',
@@ -484,11 +585,11 @@
             const priceEl = document.getElementById('currentPrice');
             const changeEl = document.getElementById('priceChange');
             let currentPrice = parseFloat(priceEl.textContent);
-            let change = (Math.random() - 0.5) * 0.02;
+            let change = (Math.random() - 0.5) * 0.5;
             currentPrice = (currentPrice + change).toFixed(2);
             priceEl.textContent = currentPrice;
             
-            const changePercent = ((Math.random() - 0.45) * 4).toFixed(2);
+            const changePercent = ((Math.random() - 0.45) * 8).toFixed(2);
             if (changePercent >= 0) {
                 changeEl.textContent = `▲ ${changePercent}%`;
                 changeEl.className = 'text-green-300';
