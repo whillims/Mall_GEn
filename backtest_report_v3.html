@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联邦共振交易系统 v3.0 - 回测报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .positive {
+            color: #10b981;
+        }
+        .negative {
+            color: #ef4444;
+        }
+        .improvement {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+    <header class="gradient-bg text-white py-6 px-4 shadow-lg">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h1 class="text-3xl font-bold">联邦共振交易系统 v3.0</h1>
+                        <span class="version-badge">多决策少操作</span>
+                    </div>
+                    <p class="text-purple-100">屏蔽短周期 + 月度2次交易限制 + 中长线专注</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-2xl font-bold negative">-0.88%</p>
+                    <p class="text-purple-200">总收益率</p>
+                </div>
+            </div>
+            <p class="text-purple-100 text-sm mt-4">回测区间: 2024-01-01 至 2026-05-23 | 初始资金: 1,000,000</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 版本演进对比 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">版本演进对比</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="py-3 px-4 text-gray-600 font-semibold">指标</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">v1.0 (固定持仓)</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">v2.0 (周期相位)</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">v3.0 (多决策少操作)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">总收益率</td>
+                                <td class="py-4 px-4 negative font-bold">-25.72%</td>
+                                <td class="py-4 px-4 negative font-bold">-0.77%</td>
+                                <td class="py-4 px-4 negative font-bold">-0.88%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">最大回撤</td>
+                                <td class="py-4 px-4 negative">-38.30%</td>
+                                <td class="py-4 px-4 positive">-6.37%</td>
+                                <td class="py-4 px-4 positive font-bold">-1.51%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">交易次数</td>
+                                <td class="py-4 px-4">145</td>
+                                <td class="py-4 px-4">22</td>
+                                <td class="py-4 px-4 font-bold">1</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">夏普比率</td>
+                                <td class="py-4 px-4 negative">-1.04</td>
+                                <td class="py-4 px-4 negative">-0.09</td>
+                                <td class="py-4 px-4 negative">-0.46</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">年化收益率</td>
+                                <td class="py-4 px-4 negative">-12.51%</td>
+                                <td class="py-4 px-4 negative">-0.32%</td>
+                                <td class="py-4 px-4 negative">-0.37%</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-4 font-semibold">策略特点</td>
+                                <td class="py-4 px-4">无择时，等权重</td>
+                                <td class="py-4 px-4">多周期相位</td>
+                                <td class="py-4 px-4 font-bold">屏蔽短周期+月限2次</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- v3.0 核心改进 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">v3.0 核心改进</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                            <h3 class="text-lg font-bold text-gray-800">屏蔽短周期</h3>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p>• 移除5日超短周期</p>
+                            <p>• 移除10日短周期</p>
+                            <p>• 保留20日中周期（最短）</p>
+                            <p>• 新增250日年线周期</p>
+                            <p class="font-semibold mt-3 text-blue-600">专注中长线趋势</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                            <h3 class="text-lg font-bold text-gray-800">月度交易限制</h3>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p>• 每月最多2次交易</p>
+                            <p>• 买入+卖出合计计算</p>
+                            <p>• 新月度自动重置计数</p>
+                            <p>• 超限自动跳过信号</p>
+                            <p class="font-semibold mt-3 text-purple-600">强制减少操作频率</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                            <h3 class="text-lg font-bold text-gray-800">提高信号门槛</h3>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p>• 买入：至少满足4/6条件</p>
+                            <p>• 卖出：至少满足2.5/4条件</p>
+                            <p>• 成交量确认：1.5倍均量</p>
+                            <p>• 多周期严格共振</p>
+                            <p class="font-semibold mt-3 text-green-600">只抓高确定性机会</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心绩效指标 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">核心绩效指标</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">总收益率</div>
+                    <div class="text-3xl font-bold negative">-0.88%</div>
+                    <div class="text-gray-600 text-sm mt-2">初始资金: 1,000,000</div>
+                    <div class="text-gray-600 text-sm">期末资金: 991,200</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">最大回撤</div>
+                    <div class="text-3xl font-bold positive">-1.51%</div>
+                    <div class="text-gray-600 text-sm mt-2">v1.0: -38.30%</div>
+                    <div class="text-green-600 text-sm">改进: +36.79pp</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">交易次数</div>
+                    <div class="text-3xl font-bold text-blue-600">1</div>
+                    <div class="text-gray-600 text-sm mt-2">2.4年仅交易1次</div>
+                    <div class="text-green-600 text-sm">月限2次严格执行</div>
+                </div>
+                <div class="glass-effect rounded-xl p-6 card-hover">
+                    <div class="text-gray-500 text-sm mb-2">夏普比率</div>
+                    <div class="text-3xl font-bold negative">-0.46</div>
+                    <div class="text-gray-600 text-sm mt-2">风险调整后收益</div>
+                    <div class="text-gray-600 text-sm">低频交易降低波动</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 周期配置 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">周期配置对比</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">v2.0 周期配置</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                                <span class="text-gray-700">5日 超短周期</span>
+                                <span class="text-red-600 font-bold">已移除</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                                <span class="text-gray-700">10日 短周期</span>
+                                <span class="text-red-600 font-bold">已移除</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span class="text-gray-700">20日 中周期</span>
+                                <span class="text-gray-600">保留</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span class="text-gray-700">60日 长周期</span>
+                                <span class="text-gray-600">保留</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span class="text-gray-700">120日 超长周期</span>
+                                <span class="text-gray-600">保留</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">v3.0 周期配置</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg">
+                                <span class="text-gray-500">5日 超短周期</span>
+                                <span class="text-gray-400">—</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg">
+                                <span class="text-gray-500">10日 短周期</span>
+                                <span class="text-gray-400">—</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                <span class="text-gray-700">20日 中周期（最短）</span>
+                                <span class="text-green-600 font-bold">✓</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                <span class="text-gray-700">60日 长周期</span>
+                                <span class="text-green-600 font-bold">✓</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                <span class="text-gray-700">120日 超长周期</span>
+                                <span class="text-green-600 font-bold">✓</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                                <span class="text-gray-700">250日 年线周期（新增）</span>
+                                <span class="text-blue-600 font-bold">NEW</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 交易限制机制 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">交易限制机制</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">月度交易限制</h3>
+                        <div class="space-y-3 text-gray-700">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>每月交易上限</span>
+                                <span class="font-bold text-purple-600">2次</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>买入+卖出合计</span>
+                                <span class="font-bold text-purple-600">是</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>新月度重置</span>
+                                <span class="font-bold text-purple-600">自动</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>超限处理</span>
+                                <span class="font-bold text-purple-600">跳过信号</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">信号质量门槛</h3>
+                        <div class="space-y-3 text-gray-700">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>买入条件数</span>
+                                <span class="font-bold text-blue-600">6个</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>买入最低满足</span>
+                                <span class="font-bold text-blue-600">4个 (67%)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>卖出条件数</span>
+                                <span class="font-bold text-blue-600">4个</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                <span>卖出最低满足</span>
+                                <span class="font-bold text-blue-600">2.5个 (63%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 买卖信号规则 v3.0 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">v3.0 买卖信号规则</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">买入信号（严格共振）</h3>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p>✓ 联邦共识度 ≥ 0.90</p>
+                            <p>✓ 20日中周期: 270°-360° 或 0°-45°（底部）</p>
+                            <p>✓ 60日长周期: 180°-360° 或 0°-90°（上升初段）</p>
+                            <p>✓ 120日超长周期: 0°-90° 或 270°-360°（底部）</p>
+                            <p>✓ 250日年线周期: 0°-120° 或 240°-360°（支持）</p>
+                            <p>✓ 多周期严格共振（相位差 &lt; 45°）</p>
+                            <p>✓ 成交量 &gt; 20日均量 × 1.5</p>
+                            <p class="font-semibold mt-3 text-green-600">需满足至少4/6条件</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">卖出信号（严格背离）</h3>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p>✗ 20日中周期: 90°-180°（顶部区域）</p>
+                            <p>✗ 60日长周期: 90°-180°（上升末期）</p>
+                            <p>✗ 价格与相位顶背离</p>
+                            <p>✗ 多周期相位差 &gt; 90°（周期背离）</p>
+                            <p class="font-semibold mt-3 text-red-600">需满足至少2.5/4条件</p>
+                            <p class="text-gray-500 mt-2">或触发硬止损：-8%</p>
+                            <p class="text-gray-500">或触发止盈：+15%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 交易明细 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">交易明细</h2>
+                <div class="bg-yellow-50 rounded-xl p-6 mb-4">
+                    <p class="text-yellow-800 font-semibold">⚠️ 由于信号门槛大幅提高 + 月度交易限制，2.4年回测期间仅产生1笔交易</p>
+                    <p class="text-yellow-700 text-sm mt-2">体现了"多决策少操作"的理念：大量分析筛选，极少实际操作</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="py-3 px-4 text-gray-600 font-semibold">日期</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">股票</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">类型</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">价格</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">原因</th>
+                                <th class="py-3 px-4 text-gray-600 font-semibold">盈亏</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4">2025-05-16</td>
+                                <td class="py-4 px-4 font-semibold">阳光电源 (300274)</td>
+                                <td class="py-4 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded">买入</span></td>
+                                <td class="py-4 px-4">131.23</td>
+                                <td class="py-4 px-4">6周期严格共振</td>
+                                <td class="py-4 px-4">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-4">2025-06-16</td>
+                                <td class="py-4 px-4 font-semibold">阳光电源 (300274)</td>
+                                <td class="py-4 px-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded">卖出</span></td>
+                                <td class="py-4 px-4">-</td>
+                                <td class="py-4 px-4">STOP_LOSS (-8%)</td>
+                                <td class="py-4 px-4 negative">-8.0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 策略哲学 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">"多决策少操作"策略哲学</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-6 text-center">
+                        <div class="text-5xl font-bold text-indigo-600 mb-2">30</div>
+                        <div class="text-gray-700 font-semibold">调仓周期</div>
+                        <div class="text-gray-500 text-sm mt-2">每20个交易日分析一次</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 text-center">
+                        <div class="text-5xl font-bold text-purple-600 mb-2">2</div>
+                        <div class="text-gray-700 font-semibold">月度交易上限</div>
+                        <div class="text-gray-500 text-sm mt-2">强制减少操作频率</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6 text-center">
+                        <div class="text-5xl font-bold text-green-600 mb-2">1</div>
+                        <div class="text-gray-700 font-semibold">实际交易次数</div>
+                        <div class="text-gray-500 text-sm mt-2">2.4年仅交易1次</div>
+                    </div>
+                </div>
+                <div class="mt-6 bg-gray-50 rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">核心理念</h3>
+                    <div class="space-y-2 text-gray-700">
+                        <p>• <strong>大量分析：</strong>每次调仓分析全部股票池，计算联邦共识度和周期相位</p>
+                        <p>• <strong>严格筛选：</strong>只有极少数高确定性机会才触发交易信号</p>
+                        <p>• <strong>强制克制：</strong>月度2次限制防止过度交易和情绪干扰</p>
+                        <p>• <strong>中长线专注：</strong>屏蔽短周期噪音，专注年线级别的趋势机会</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 风险提示 -->
+        <section class="mb-8">
+            <div class="glass-effect rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">风险提示与局限</h2>
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6">
+                    <div class="space-y-3 text-gray-700">
+                        <p>⚠️ <strong>信号稀疏：</strong>严格条件可能导致信号过于稀疏，错失部分机会</p>
+                        <p>⚠️ <strong>模拟数据：</strong>回测使用模拟价格数据，与真实市场存在差异</p>
+                        <p>⚠️ <strong>参数敏感：</strong>周期参数和阈值设置对结果影响较大</p>
+                        <p>⚠️ <strong>黑天鹅事件：</strong>极端行情下任何策略都可能失效</p>
+                        <p>⚠️ <strong>本报告仅供研究参考，不构成投资建议</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="gradient-bg text-white py-8 px-4 mt-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-purple-100">差异化联邦沉思引擎 · 量化交易系统 v3.0</p>
+            <p class="text-purple-200 text-sm mt-2">MECP-v3.0 Protocol | 多决策少操作</p>
+        </div>
+    </footer>
+</body>
+</html>

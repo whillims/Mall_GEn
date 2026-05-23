@@ -227,13 +227,14 @@ class BacktestEngineV2:
                     recent_prices = data['prices'][start_idx:date_idx+1]
                     recent_volumes = data['volumes'][start_idx:date_idx+1]
                     
-                    # 生成相位信号
+                    # 生成相位信号 - v3.0 传入当前日期用于交易限制
                     phase_signal = self.phase_analyzer.generate_signal(
                         stock_code=stock.code,
                         stock_name=stock.name,
                         prices=recent_prices,
                         volumes=recent_volumes,
-                        consensus=consensus.consensus_degree
+                        consensus=consensus.consensus_degree,
+                        current_date=current_date
                     )
                     
                     # 记录信号历史

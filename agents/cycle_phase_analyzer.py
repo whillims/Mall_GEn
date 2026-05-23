@@ -33,13 +33,12 @@ class CyclePhaseAnalyzer:
     """
     
     def __init__(self):
-        # 核心周期配置
+        # 核心周期配置 - v3.0 屏蔽短周期及以下，专注中长线
         self.periods = {
-            'ultra_short': 5,    # 超短周期
-            'short': 10,         # 短周期
-            'medium': 20,        # 中周期
+            'medium': 20,        # 中周期（最短）
             'long': 60,          # 长周期
-            'ultra_long': 120    # 超长周期
+            'ultra_long': 120,   # 超长周期
+            'mega_long': 250     # 超超长周期（年线）
         }
         
         # 相位区域定义
@@ -51,6 +50,11 @@ class CyclePhaseAnalyzer:
             'fall_early': (180, 270),  # 下降初期
             'fall_late': (270, 360)    # 下降末期
         }
+        
+        # 月度交易次数限制
+        self.monthly_trade_limit = 2
+        self.monthly_trade_count = 0
+        self.current_month = None
         
     def calculate_hilbert_phase(self, prices: np.ndarray) -> np.ndarray:
         """
@@ -279,16 +283,54 @@ class CyclePhaseAnalyzer:
         
         return False
     
+    def check_monthly_trade_limit(self, current_date: datetime) -> bool:
+        """
+        检查月度交易次数限制
+        
+        v3.0: 每月最多2次交易（买入+卖出合计）
+        
+        Args:
+            current_date: 当前日期
+            
+        Returns:
+            是否允许交易
+        """
+        current_month = (current_date.year, current_date.month)
+        
+        # 新月度重置计数
+        if self.current_month != current_month:
+            self.current_month = current_month
+            self.monthly_trade_count = 0
+            print(f"  [交易限制] 新月度 {current_date.year}-{current_date.month:02d}，重置交易计数")
+        
+        # 检查是否超过限制
+        if self.monthly_trade_count >= self.monthly_trade_limit:
+            print(f"  [交易限制] 本月交易次数已达上限 {self.monthly_trade_limit}，跳过")
+            return False
+        
+        return True
+    
+    def record_trade(self):
+        """记录一次交易"""
+        self.monthly_trade_count += 1
+        print(f"  [交易限制] 本月已交易 {self.monthly_trade_count}/{self.monthly_trade_limit} 次")
+    
     def generate_signal(
         self,
         stock_code: str,
         stock_name: str,
         prices: np.ndarray,
         volumes: np.ndarray,
-        consensus: float
+        consensus: float,
+        current_date: datetime = None
     ) -> PhaseSignal:
         """
-        生成买卖信号
+        生成买卖信号 - v3.0 优化版
+        
+        特点：
+        1. 屏蔽短周期（5日/10日），专注中长线（20日/60日/120日/250日）
+        2. 月度交易次数限制（最多2次）
+        3. 提高信号质量门槛，减少无效交易
         
         Args:
             stock_code: 股票代码
@@ -296,6 +338,7 @@ class CyclePhaseAnalyzer:
             prices: 价格序列
             volumes: 成交量序列
             consensus: 联邦共识度
+            current_date: 当前日期（用于交易限制）
             
         Returns:
             相位信号
@@ -312,56 +355,70 @@ class CyclePhaseAnalyzer:
         # 检测背离
         divergence = self.detect_divergence(prices, phases)
         
-        # 获取关键周期相位
-        short_phase = phases.get(10, 0)      # 短周期
+        # 获取关键周期相位 - v3.0 只关注中长线
         medium_phase = phases.get(20, 0)     # 中周期
         long_phase = phases.get(60, 0)       # 长周期
+        ultra_long_phase = phases.get(120, 0) # 超长周期
+        mega_long_phase = phases.get(250, 0)  # 年线周期
         
-        # 成交量确认
+        # 成交量确认 - 提高标准
         volume_confirm = False
         if len(volumes) >= 20:
             avg_volume = np.mean(volumes[-20:])
             current_volume = volumes[-1]
-            volume_confirm = current_volume > avg_volume * 1.2
+            volume_confirm = current_volume > avg_volume * 1.5  # 从1.2提高到1.5
         
         # 判断信号
         signal_type = 'HOLD'
         signal_strength = 0.0
         
-        # 买入信号判断
+        # v3.0 买入信号判断 - 更严格的条件
         if consensus >= 0.90:  # 筛选层通过
-            # 条件1: 短周期在底部或上升初期
-            short_bottom = 270 <= short_phase <= 360 or 0 <= short_phase <= 90
+            # 条件1: 中周期在底部或上升初期（20日）
+            medium_bottom = 270 <= medium_phase <= 360 or 0 <= medium_phase <= 45
             
-            # 条件2: 中周期在下降末期或上升初期
-            medium_rise = 180 <= medium_phase <= 360 or 0 <= medium_phase <= 90
+            # 条件2: 长周期在下降末期或上升初期（60日）
+            long_rise = 180 <= long_phase <= 360 or 0 <= long_phase <= 90
             
-            # 条件3: 长周期在上升初期或底部
-            long_bottom = 0 <= long_phase <= 90 or 270 <= long_phase <= 360
+            # 条件3: 超长周期在上升初期或底部（120日）
+            ultra_long_bottom = 0 <= ultra_long_phase <= 90 or 270 <= ultra_long_phase <= 360
             
-            # 条件4: 多周期共振
+            # 条件4: 年线周期支持（250日）
+            mega_long_support = 0 <= mega_long_phase <= 120 or 240 <= mega_long_phase <= 360
+            
+            # 条件5: 多周期共振
             resonance = is_resonance
             
-            # 条件5: 成交量确认
+            # 条件6: 成交量确认
             volume = volume_confirm
             
-            # 计算买入信号强度
-            buy_conditions = [short_bottom, medium_rise, long_bottom, resonance, volume]
+            # v3.0 计算买入信号强度 - 需要满足更多条件
+            buy_conditions = [medium_bottom, long_rise, ultra_long_bottom, mega_long_support, resonance, volume]
             buy_score = sum(buy_conditions) / len(buy_conditions)
             
-            if buy_score >= 0.6:  # 至少满足3个条件
-                signal_type = 'BUY'
-                signal_strength = buy_score * consensus
+            # v3.0 提高门槛：至少满足4个条件（原3个）
+            if buy_score >= 0.67:  # 4/6 = 0.67
+                # 检查月度交易限制
+                if current_date and not self.check_monthly_trade_limit(current_date):
+                    signal_type = 'HOLD'
+                else:
+                    signal_type = 'BUY'
+                    signal_strength = buy_score * consensus
+                    if current_date:
+                        self.record_trade()
         
-        # 卖出信号判断
+        # v3.0 卖出信号判断 - 更严格的条件
         if signal_type == 'HOLD':
-            # 条件1: 短周期在顶部区域
-            short_top = 90 <= short_phase <= 180
+            # 条件1: 中周期在顶部区域（20日）
+            medium_top = 90 <= medium_phase <= 180
             
-            # 条件2: 价格与相位背离
+            # 条件2: 长周期在上升末期（60日）
+            long_top = 90 <= long_phase <= 180
+            
+            # 条件3: 价格与相位背离
             div = divergence
             
-            # 条件3: 多周期背离
+            # 条件4: 多周期背离
             phase_diffs = []
             phase_values = list(phases.values())
             for i in range(len(phase_values)):
@@ -372,13 +429,20 @@ class CyclePhaseAnalyzer:
             
             cycle_divergence = np.mean(phase_diffs) > 90 if phase_diffs else False
             
-            # 计算卖出信号强度
-            sell_conditions = [short_top, div, cycle_divergence]
+            # v3.0 计算卖出信号强度
+            sell_conditions = [medium_top, long_top, div, cycle_divergence]
             sell_score = sum(sell_conditions) / len(sell_conditions)
             
-            if sell_score >= 0.5:  # 至少满足1.5个条件
-                signal_type = 'SELL'
-                signal_strength = sell_score
+            # v3.0 提高门槛：至少满足2.5个条件
+            if sell_score >= 0.625:  # 2.5/4 = 0.625
+                # 检查月度交易限制
+                if current_date and not self.check_monthly_trade_limit(current_date):
+                    signal_type = 'HOLD'
+                else:
+                    signal_type = 'SELL'
+                    signal_strength = sell_score
+                    if current_date:
+                        self.record_trade()
         
         return PhaseSignal(
             stock_code=stock_code,
@@ -390,12 +454,15 @@ class CyclePhaseAnalyzer:
             signal_strength=round(signal_strength, 4),
             divergence=divergence,
             details={
-                'short_phase': short_phase,
                 'medium_phase': medium_phase,
                 'long_phase': long_phase,
+                'ultra_long_phase': ultra_long_phase,
+                'mega_long_phase': mega_long_phase,
                 'volume_confirm': volume_confirm,
                 'is_resonance': is_resonance,
-                'consensus': consensus
+                'consensus': consensus,
+                'monthly_trades': self.monthly_trade_count,
+                'monthly_limit': self.monthly_trade_limit
             }
         )
     
