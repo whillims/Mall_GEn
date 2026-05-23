@@ -109,14 +109,18 @@ class DataLoader:
         return data
 
     def load_data(self) -> pd.DataFrame:
+        errors = []
         try:
             if self._is_a_stock():
                 self.data = self._load_tencent_data()
             else:
                 self.data = self._load_yfinance_data()
         except Exception as e:
-            print(f"下载失败: {e}")
-            self.data = self._generate_mock_data()
+            errors.append(str(e))
+            raise RuntimeError(
+                f"无法加载真实数据，错误: {'; '.join(errors)}。"
+                f"项目规则要求所有数据必须采用真实数据，禁止使用模拟数据。"
+            )
         return self.data
 
     def get_train_test_split(self, train_ratio: float = 0.8) -> Tuple[pd.DataFrame, pd.DataFrame]:
